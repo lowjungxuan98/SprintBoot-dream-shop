@@ -1,10 +1,10 @@
 package com.lowjungxuan.dreamshop.controllers;
 
-import com.lowjungxuan.dreamshop.exceptions.AlreadyExistException;
+import com.lowjungxuan.dreamshop.exceptions.AlreadyExistsException;
 import com.lowjungxuan.dreamshop.exceptions.ResourceNotFoundException;
-import com.lowjungxuan.dreamshop.models.Category;
+import com.lowjungxuan.dreamshop.model.Category;
 import com.lowjungxuan.dreamshop.response.ApiResponse;
-import com.lowjungxuan.dreamshop.services.category.ICategoryService;
+import com.lowjungxuan.dreamshop.service.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse> addCategory(@RequestBody Category category) {
         try {
             return ResponseEntity.ok(new ApiResponse("Category added successfully", categoryService.addCategory(category)));
-        } catch (AlreadyExistException e) {
+        } catch (AlreadyExistsException e) {
             return ResponseEntity.status(CONFLICT).body(new ApiResponse(e.getMessage(), null));
         }
     }

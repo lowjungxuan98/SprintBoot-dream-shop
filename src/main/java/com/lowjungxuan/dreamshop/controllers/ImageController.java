@@ -2,9 +2,9 @@ package com.lowjungxuan.dreamshop.controllers;
 
 import com.lowjungxuan.dreamshop.dto.ImageDto;
 import com.lowjungxuan.dreamshop.exceptions.ResourceNotFoundException;
-import com.lowjungxuan.dreamshop.models.Image;
+import com.lowjungxuan.dreamshop.model.Image;
 import com.lowjungxuan.dreamshop.response.ApiResponse;
-import com.lowjungxuan.dreamshop.services.image.IImageService;
+import com.lowjungxuan.dreamshop.service.image.IImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -45,7 +45,7 @@ public class ImageController {
                 .body(resource);
     }
 
-    @GetMapping("/images/{imageId}/update")
+    @PutMapping("/image/{imageId}/update")
     public ResponseEntity<ApiResponse> updateImage(@PathVariable Long imageId, @RequestBody MultipartFile file) {
         try {
             Image image = imageService.getImageById(imageId);
