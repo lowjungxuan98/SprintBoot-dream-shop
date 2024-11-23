@@ -4,6 +4,8 @@ import com.lowjungxuan.dreamshop.security.jwt.AuthTokenFilter;
 import com.lowjungxuan.dreamshop.security.jwt.JwtAuthEntryPoint;
 import com.lowjungxuan.dreamshop.security.jwt.JwtUtils;
 import com.lowjungxuan.dreamshop.security.user.ShopUserDetailsService;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +28,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
+@SecurityScheme(
+        name = "Bearer Authentication",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer"
+)
 @EnableMethodSecurity(prePostEnabled = true)
 public class ShopConfig {
     private final ShopUserDetailsService userDetailsService;

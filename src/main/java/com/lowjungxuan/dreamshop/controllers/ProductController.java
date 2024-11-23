@@ -8,6 +8,7 @@ import com.lowjungxuan.dreamshop.request.AddProductRequest;
 import com.lowjungxuan.dreamshop.request.ProductUpdateRequest;
 import com.lowjungxuan.dreamshop.response.ApiResponse;
 import com.lowjungxuan.dreamshop.service.product.IProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

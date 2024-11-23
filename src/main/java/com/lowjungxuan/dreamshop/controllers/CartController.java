@@ -3,6 +3,7 @@ package com.lowjungxuan.dreamshop.controllers;
 import com.lowjungxuan.dreamshop.exceptions.ResourceNotFoundException;
 import com.lowjungxuan.dreamshop.response.ApiResponse;
 import com.lowjungxuan.dreamshop.service.cart.ICartService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}/carts")
+@SecurityRequirement(name = "Bearer Authentication")
 public class CartController {
     private final ICartService cartService;
     private final ModelMapper modelMapper;

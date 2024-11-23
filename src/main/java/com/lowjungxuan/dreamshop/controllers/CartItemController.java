@@ -7,6 +7,7 @@ import com.lowjungxuan.dreamshop.service.cart.ICartService;
 import com.lowjungxuan.dreamshop.service.user.IUserService;
 import com.lowjungxuan.dreamshop.service.user.UserService;
 import io.jsonwebtoken.JwtException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}/cartItems")
+@SecurityRequirement(name = "Bearer Authentication")
 public class CartItemController {
     private final ICartItemService cartItemService;
     private final ICartService cartService;
@@ -23,9 +25,7 @@ public class CartItemController {
 
 
     @PostMapping("/item/add")
-    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam(required = false) Long cartId,
-                                                     @RequestParam Long productId,
-                                                     @RequestParam Integer quantity) {
+    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam(required = false) Long cartId, @RequestParam Long productId, @RequestParam Integer quantity) {
         try {
             if (cartId == null) {
                 cartId = cartService.initializeNewCart(userService.getAuthenticatedUser()).getId();
