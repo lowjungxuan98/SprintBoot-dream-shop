@@ -10,7 +10,6 @@ import java.util.List;
 public class ProductDto {
     private Long id;
     private String name;
-    private String brand;
     private BigDecimal price;
     private int inventory;
     private String description;

@@ -29,9 +29,6 @@ public class ProductService implements IProductService {
 
     @Override
     public Product addProduct(AddProductRequest request) {
-        if (productExists(request.getName(), request.getBrand())){
-            throw new AlreadyExistsException(request.getBrand() +" "+request.getName()+ " already exists, you may update this product instead!");
-        }
         Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
                 .orElseGet(() -> {
                     Category newCategory = new Category(request.getCategory().getName());
@@ -42,14 +39,9 @@ public class ProductService implements IProductService {
         return productRepository.save(createProduct(request, category));
     }
 
-    private boolean productExists(String name , String brand) {
-        return productRepository.existsByNameAndBrand(name, brand);
-    }
-
     private Product createProduct(AddProductRequest request, Category category) {
         return new Product(
                 request.getName(),
-                request.getBrand(),
                 request.getPrice(),
                 request.getInventory(),
                 request.getDescription(),
@@ -80,7 +72,6 @@ public class ProductService implements IProductService {
 
     private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request) {
         existingProduct.setName(request.getName());
-        existingProduct.setBrand(request.getBrand());
         existingProduct.setPrice(request.getPrice());
         existingProduct.setInventory(request.getInventory());
         existingProduct.setDescription(request.getDescription());
@@ -101,28 +92,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getProductsByBrand(String brand) {
-        return productRepository.findByBrand(brand);
-    }
-
-    @Override
-    public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-        return productRepository.findByCategoryNameAndBrand(category, brand);
-    }
-
-    @Override
     public List<Product> getProductsByName(String name) {
         return productRepository.findByName(name);
-    }
-
-    @Override
-    public List<Product> getProductsByBrandAndName(String brand, String name) {
-        return productRepository.findByBrandAndName(brand, name);
-    }
-
-    @Override
-    public Long countProductsByBrandAndName(String brand, String category) {
-        return productRepository.countByBrandAndName(brand, category);
     }
 
     @Override

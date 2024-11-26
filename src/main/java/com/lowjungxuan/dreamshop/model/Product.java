@@ -1,5 +1,6 @@
 package com.lowjungxuan.dreamshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,7 +19,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String brand;
     private BigDecimal price;
     private int inventory;
     private String description;
@@ -27,13 +27,17 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendor_user_id", nullable = false)
+    @JsonBackReference
+    private VendorProfile vendorProfile;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Image> image;
 
-    public Product(String name, String brand, BigDecimal price, int inventory, String description, Category category) {
+    public Product(String name, BigDecimal price, int inventory, String description, Category category) {
         this.name = name;
-        this.brand = brand;
         this.price = price;
         this.inventory = inventory;
         this.description = description;

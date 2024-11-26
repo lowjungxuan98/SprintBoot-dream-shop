@@ -69,32 +69,6 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/products/by/brand-and-name")
-    public ResponseEntity<ApiResponse> getProductByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {
-        try {
-            List<Product> products = productService.getProductsByBrandAndName(brandName, productName);
-            if (products.isEmpty()) {
-                return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
-            }
-            return ResponseEntity.ok(new ApiResponse("success", productService.getConvertedProducts(products)));
-        } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
-        }
-    }
-
-    @GetMapping("/products/by/category-and-brand")
-    public ResponseEntity<ApiResponse> getProductByCategoryAndBrand(@RequestParam String category, @RequestParam String brand) {
-        try {
-            List<Product> products = productService.getProductsByCategoryAndBrand(category, brand);
-            if (products.isEmpty()) {
-                return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
-            }
-            return ResponseEntity.ok(new ApiResponse("success", productService.getConvertedProducts(products)));
-        } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("error", e.getMessage()));
-        }
-    }
-
     @GetMapping("/products/{name}/products")
     public ResponseEntity<ApiResponse> getProductByName(@PathVariable String name) {
         try {
@@ -108,19 +82,6 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/by-brand")
-    public ResponseEntity<ApiResponse> findProductByBrand(@RequestParam String brand) {
-        try {
-            List<Product> products = productService.getProductsByBrand(brand);
-            if (products.isEmpty()) {
-                return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
-            }
-            return ResponseEntity.ok(new ApiResponse("success", productService.getConvertedProducts(products)));
-        } catch (Exception e) {
-            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
-        }
-    }
-
     @GetMapping("/product/{category}/all/products")
     public ResponseEntity<ApiResponse> findProductByCategory(@PathVariable String category) {
         try {
@@ -129,15 +90,6 @@ public class ProductController {
                 return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
             }
             return ResponseEntity.ok(new ApiResponse("success", productService.getConvertedProducts(products)));
-        } catch (Exception e) {
-            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
-        }
-    }
-
-    @GetMapping("/product/count/by-brand/and-name")
-    public ResponseEntity<ApiResponse> countProductsByBrandAndName(@RequestParam String brand, @RequestParam String name) {
-        try {
-            return ResponseEntity.ok(new ApiResponse("Product count!", productService.countProductsByBrandAndName(brand, name)));
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
